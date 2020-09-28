@@ -6,7 +6,7 @@ import personalfinance.settings.Text;
 
 public final class MainToolbar extends AbstractToolbar {
     public MainToolbar(){
-        super(Style.BORDER_MAIN_TOOLBAR);
+        super(Style.BORDER_MAIN_TOOLBAR, null);
         init();
     }
     @Override

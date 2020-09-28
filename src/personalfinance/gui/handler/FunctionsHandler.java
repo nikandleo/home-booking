@@ -65,7 +65,13 @@ public class FunctionsHandler extends Handler implements MouseListener, KeyListe
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if(e.getSource() instanceof TableData) {
+            if(e.getButton() == MouseEvent.BUTTON3){
+                TableData td = frame.getRightPanel().getTableData();
+                int row = td.rowAtPoint(e.getPoint());
+                td.setRowSelectionInterval(row, row);
+            }
+        }
     }
 
     @Override

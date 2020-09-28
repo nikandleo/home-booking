@@ -1,6 +1,7 @@
 package personalfinance.gui.table;
 
 import personalfinance.gui.Refresh;
+import personalfinance.gui.handler.FunctionsHandler;
 import personalfinance.gui.menu.TablePopupMenu;
 import personalfinance.gui.table.model.MainTableModel;
 import personalfinance.gui.table.renderer.MainTableCellRenderer;
@@ -16,7 +17,7 @@ abstract public class TableData extends JTable implements Refresh {
     private final String[] columns;
     private final ImageIcon[] icons;
 
-    public TableData(MainTableModel model, String[] columns, ImageIcon[] icons)
+    public TableData(MainTableModel model, FunctionsHandler handler, String[] columns, ImageIcon[] icons)
     {
         super(model);
         this.popup = new TablePopupMenu();
@@ -30,6 +31,9 @@ abstract public class TableData extends JTable implements Refresh {
         setAutoCreateRowSorter(true);
         setPreferredScrollableViewportSize(Style.DIMENSION_TABLE_SHOW_SIZE);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        addMouseListener(handler);
+        addKeyListener(handler);
 
         for(int i = 0; i < columns.length; i++)
         {
@@ -47,8 +51,10 @@ abstract public class TableData extends JTable implements Refresh {
         if(p != null)
         {
             int row = rowAtPoint(p);
-            if(row != -1)
-                setRowSelectionInterval(row, row);
+            if(isRowSelected(row))
+                return super.getComponentPopupMenu();
+            else
+                return null;
         }
         return super.getComponentPopupMenu();
     }
@@ -57,11 +63,14 @@ abstract public class TableData extends JTable implements Refresh {
     public void refresh() {
         int selectedRow = getSelectedRow();
         ((MainTableModel)getModel()).refresh();
-//        for(int i = 0; i < columns.length; i++)
-//        {
-//            getColumn(Text.get(columns[i])).setHeaderRenderer(new TableHeaderIconRenderer(icons[i]));
-//        }
-        if(selectedRow != -1 && selectedRow < getRowCount()) setRowSelectionInterval(selectedRow, selectedRow);
+        for(int i = 0; i < columns.length; i++)
+        {
+            getColumn(Text.get(columns[i])).setHeaderRenderer(new TableHeaderIconRenderer(icons[i]));
+        }
+        if(selectedRow != -1 && selectedRow < getRowCount()) {
+            setRowSelectionInterval(selectedRow, selectedRow);
+            requestFocus();
+        }
         init();
     }
 
