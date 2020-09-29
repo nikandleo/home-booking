@@ -1,6 +1,7 @@
 package personalfinance.gui;
 
-import personalfinance.gui.dialog.*;
+import personalfinance.gui.handler.MainToolbarHandler;
+import personalfinance.gui.handler.MainWindowHandler;
 import personalfinance.gui.menu.MainMenu;
 import personalfinance.gui.panel.*;
 import personalfinance.gui.toolbar.MainToolbar;
@@ -25,7 +26,7 @@ public class MainFrame extends JFrame implements Refresh {
 
         setResizable(false);
         setIconImage(Style.ICON_MAIN.getImage());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         mb = new MainMenu(this);
         setJMenuBar(mb);
@@ -37,7 +38,7 @@ public class MainFrame extends JFrame implements Refresh {
         constraints.gridy = 0;
         constraints.gridwidth = 2;
 
-        tb = new MainToolbar();
+        tb = new MainToolbar(new MainToolbarHandler(this));
         add(tb, constraints);
 
         constraints.gridy = 1;
@@ -47,10 +48,12 @@ public class MainFrame extends JFrame implements Refresh {
         leftPanel = new LeftPanel(this);
         add(leftPanel, constraints);
 
-        setRightPanel(new TransactionPanel(this));
+        setRightPanel(new OverviewPanel(this));
 
         pack();
         setLocationRelativeTo(null);
+
+        addWindowListener(new MainWindowHandler());
     }
 
     @Override
@@ -66,7 +69,7 @@ public class MainFrame extends JFrame implements Refresh {
         return mb;
     }
 
-    private void setRightPanel(RightPanel panel) {
+    public final void setRightPanel(RightPanel panel) {
         if (rightPanel != null) remove(rightPanel);
         constraints.gridy = 1;
         constraints.gridx = 1;

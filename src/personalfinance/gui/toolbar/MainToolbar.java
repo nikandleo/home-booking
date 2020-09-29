@@ -1,12 +1,13 @@
 package personalfinance.gui.toolbar;
 
+import personalfinance.gui.handler.MainToolbarHandler;
 import personalfinance.settings.HandlerCode;
 import personalfinance.settings.Style;
 import personalfinance.settings.Text;
 
 public final class MainToolbar extends AbstractToolbar {
-    public MainToolbar(){
-        super(Style.BORDER_MAIN_TOOLBAR, null);
+    public MainToolbar(MainToolbarHandler handler){
+        super(Style.BORDER_MAIN_TOOLBAR, handler);
         init();
     }
     @Override

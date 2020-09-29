@@ -2,8 +2,6 @@ package personalfinance.gui.toolbar;
 
 import personalfinance.gui.EnableEditDelete;
 import personalfinance.gui.MainButton;
-import personalfinance.gui.dialog.AddEditDialog;
-import personalfinance.gui.handler.FunctionsHandler;
 import personalfinance.gui.handler.Handler;
 import personalfinance.settings.HandlerCode;
 import personalfinance.settings.Style;

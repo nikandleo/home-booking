@@ -3,8 +3,7 @@ package personalfinance.gui.menu;
 import personalfinance.gui.EnableEditDelete;
 import personalfinance.gui.MainFrame;
 import personalfinance.gui.Refresh;
-import personalfinance.gui.handler.Handler;
-import personalfinance.gui.handler.MenuFileHandler;
+import personalfinance.gui.handler.*;
 import personalfinance.settings.HandlerCode;
 import personalfinance.settings.Style;
 import personalfinance.settings.Text;
@@ -43,9 +42,9 @@ public class MainMenu extends JMenuBar implements Refresh, EnableEditDelete {
         add(help);
 
         MenuFileHandler fileHandler = new MenuFileHandler(frame);
-        MenuFileHandler editHandler = new MenuFileHandler(frame);
-        MenuFileHandler viewHandler = new MenuFileHandler(frame);
-        MenuFileHandler helpHandler = new MenuFileHandler(frame);
+        MenuEditHandler editHandler = new MenuEditHandler(frame);
+        MenuViewHandler viewHandler = new MenuViewHandler(frame);
+        MenuHelpHandler helpHandler = new MenuHelpHandler(frame);
 
         addMenuItem(file, fileHandler, Text.get("MENU_FILE_NEW"), Style.ICON_MENU_FILE_NEW, HandlerCode.MENU_FILE_NEW, KeyEvent.VK_N);
         addMenuItem(file, fileHandler, Text.get("MENU_FILE_OPEN"), Style.ICON_MENU_FILE_OPEN, HandlerCode.MENU_FILE_OPEN, KeyEvent.VK_O);
@@ -91,6 +90,7 @@ public class MainMenu extends JMenuBar implements Refresh, EnableEditDelete {
     @Override
     public void setEnableEditDelete(boolean enable) {
         menuEdit.setEnabled(enable);
+        menuDelete.setEnabled(enable);
     }
 
     @Override
