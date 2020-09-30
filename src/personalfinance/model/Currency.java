@@ -24,6 +24,8 @@ public class Currency extends Common{
         this.rate = rate;
         this.isOn = isOn;
         this.isBase = isBase;
+        if(this.isBase)
+            this.isOn = true;
     }
 
     public String getTitle() {
@@ -110,8 +112,16 @@ public class Currency extends Common{
     @Override
     public void postEdit(SaveData sd) {
         clearBase(sd);
-        for (Account a : sd.getAccounts())
-            if(a.getCurrency().equals(sd.getOldCommon())) a.setCurrency(this);
+        for (Account a : sd.getAccounts()) {
+            if (a.getCurrency().equals(sd.getOldCommon())) a.setCurrency(this);
+            for (Transaction t : sd.getTransactions()) {
+                if (t.getAccount().getCurrency().equals(sd.getOldCommon())) t.getAccount().setCurrency(this);
+            }
+            for (Transfer t : sd.getTransfers()) {
+                if (t.getFromAccount().getCurrency().equals(sd.getOldCommon())) t.getFromAccount().setCurrency(this);
+                if (t.getToAccount().getCurrency().equals(sd.getOldCommon())) t.getToAccount().setCurrency(this);
+            }
+        }
     }
 
     private void clearBase(SaveData sd) {

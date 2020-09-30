@@ -20,8 +20,8 @@ public class PersonalFinance {
         init();
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
-        SaveData sd = SaveData.getInstance();
-        System.out.println(sd);
+//        SaveData sd = SaveData.getInstance();
+//        System.out.println(sd);
         //testModel();
     }
 
